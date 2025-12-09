@@ -1,0 +1,601 @@
+	section	.text,"ax",@progbits
+	assume	adl = 1
+	section	.text,"ax",@progbits
+	private	__GLOBAL__sub_I_main.cpp
+__GLOBAL__sub_I_main.cpp:
+	ld	hl, _snakesegmentsx
+	ld	de, 5
+	ld	bc, 1200
+	push	bc
+	push	de
+	push	hl
+	call	__ZN13specialVectorIhEC2Eii
+	pop	hl
+	pop	hl
+	pop	hl
+	ld	hl, 1200
+	push	hl
+	ld	hl, 5
+	push	hl
+	ld	hl, _snakesegmentsy
+	push	hl
+	call	__ZN13specialVectorIhEC2Eii
+	pop	hl
+	pop	hl
+	pop	hl
+	ret
+	section	.text,"ax",@progbits
+
+	section	.text,"ax",@progbits
+	weak	__ZN13specialVectorIhEC2Eii
+__ZN13specialVectorIhEC2Eii:
+	call	__frameset0
+	ld	hl, (ix + 12)
+	push	hl
+	call	_malloc
+	pop	de
+	ld	iy, (ix + 6)
+	ld	(iy), hl
+	ld	hl, (ix + 12)
+	ld	(iy + 6), hl
+	ld	hl, (ix + 9)
+	ld	(iy + 3), hl
+	pop	ix
+	ret
+	section	.text,"ax",@progbits
+
+	section	.text,"ax",@progbits
+	public	__Z8initgamev
+__Z8initgamev:
+	ld	iyh, 1
+	ld	e, 0
+	ld	d, 2
+	ld	h, 15
+	ld	iyl, 30
+	ld	bc, 5
+	ld	a, iyh
+	ld	(_direction), a
+	ld	a, e
+	ld	(_direction+1), a
+	ld	a, d
+	ld	(_x), a
+	ld	a, h
+	ld	(_y), a
+	ld	a, iyl
+	ld	(_apple), a
+	ld	a, h
+	ld	(_apple+1), a
+	ld.sis	de, 0
+	ld	hl, _score
+	ld	(hl), e
+	inc	hl
+	ld	(hl), d
+	ld	a, iyh
+	ld	(_alive), a
+	ld	(_snakesegmentsx+3), bc
+	ld	(_snakesegmentsy+3), bc
+	or	a, a
+	sbc	hl, hl
+	push	hl
+	ld	hl, _snakesegmentsx
+	push	hl
+	call	__ZN13specialVectorIhE4fillEh
+	pop	hl
+	pop	hl
+	ld	hl, 31
+	push	hl
+	ld	hl, _snakesegmentsy
+	push	hl
+	call	__ZN13specialVectorIhE4fillEh
+	pop	hl
+	pop	hl
+	ret
+	section	.text,"ax",@progbits
+
+	section	.text,"ax",@progbits
+	weak	__ZN13specialVectorIhE4fillEh
+__ZN13specialVectorIhE4fillEh:
+	ld	hl, -6
+	call	__frameset
+	ld	iy, (ix + 6)
+	or	a, a
+	sbc	hl, hl
+	ld	de, 0
+	ld	e, (ix + 9)
+	ld	(ix - 6), de
+	ld	de, (iy)
+	ld	(ix - 3), de
+BB3_1:
+	ld	de, (iy + 3)
+	push	hl
+	pop	bc
+	or	a, a
+	sbc	hl, de
+	call	pe, __setflag
+	jp	p, BB3_3
+	ld	hl, (ix - 6)
+	ld	iy, (ix - 3)
+	ld	(iy), hl
+	push	bc
+	pop	hl
+	inc	hl
+	lea	iy, iy + 3
+	ld	(ix - 3), iy
+	ld	iy, (ix + 6)
+	jr	BB3_1
+BB3_3:
+	ld	sp, ix
+	pop	ix
+	ret
+	section	.text,"ax",@progbits
+
+	section	.text,"ax",@progbits
+	public	_main
+_main:
+	ld	hl, -9
+	call	__frameset
+	ld	hl, (-851900)
+	ld	a, (-851897)
+	push	hl
+	call	_srand
+	pop	hl
+	ld	hl, 127
+	push	hl
+	ld	hl, _snakesegmentsy
+	push	hl
+	call	__ZN13specialVectorIhE4fillEh
+	pop	hl
+	pop	hl
+	call	_gfx_Begin
+	ld	hl, 1
+	push	hl
+	call	_gfx_SetDraw
+	pop	hl
+	ld	hl, -2
+	push	hl
+	call	_gfx_SetTextFGColor
+	pop	hl
+	or	a, a
+	sbc	hl, hl
+	push	hl
+	call	_gfx_SetTextBGColor
+	pop	hl
+	call	__Z8initgamev
+BB4_1:
+	ld	a, (_key)
+	cp	a, 5
+	jp	nc, BB4_28
+	or	a, a
+	sbc	hl, hl
+	push	hl
+	call	_gfx_FillScreen
+	pop	hl
+	ld	a, (_key)
+	dec	a
+	cp	a, 4
+	jr	nc, BB4_10
+	ld	de, 0
+	ld	e, a
+	ld	hl, JTI4_0
+	add	hl, de
+	add	hl, de
+	add	hl, de
+	ld	hl, (hl)
+	jp	(hl)
+BB4_4:
+	ld	a, (_direction+1)
+	or	a, a
+	ld	a, 0
+	ld	l, 1
+	jr	z, BB4_9
+	jr	BB4_10
+BB4_5:
+	ld	a, (_direction)
+	or	a, a
+	ld	a, 1
+	jr	BB4_8
+BB4_6:
+	ld	a, (_direction+1)
+	or	a, a
+	ld	a, 0
+	ld	l, -1
+	jr	z, BB4_9
+	jr	BB4_10
+BB4_7:
+	ld	a, (_direction)
+	or	a, a
+	ld	a, -1
+BB4_8:
+	ld	l, 0
+	jr	nz, BB4_10
+BB4_9:
+	ld	(_direction), a
+	ld	a, l
+	ld	(_direction+1), a
+BB4_10:
+	ld	a, (_direction)
+	ld	l, a
+	ld	a, (_x)
+	add	a, l
+	ld	(_x), a
+	ld	a, (_direction+1)
+	ld	l, a
+	ld	a, (_y)
+	add	a, l
+	ld	(_y), a
+	scf
+	sbc	hl, hl
+	push	hl
+	call	_gfx_SetColor
+	pop	hl
+	ld.sis	hl, 0
+	ld	c, l
+	ld	b, h
+BB4_11:
+	ld	a, b
+	ld	l, a
+	rlc	l
+	sbc	hl, hl
+	ld	h, a
+	ld	l, c
+	ld	de, (_snakesegmentsx+3)
+	ld	(ix - 3), hl
+	or	a, a
+	sbc	hl, de
+	call	pe, __setflag
+	jp	p, BB4_16
+	ld	(ix - 9), bc
+	ld	iy, (_snakesegmentsx)
+	ld	hl, (ix - 3)
+	ld	bc, 3
+	call	__imulu
+	push	hl
+	pop	de
+	ld	(ix - 6), de
+	add	iy, de
+	ld	hl, (iy)
+	call	__ishl
+	push	hl
+	pop	iy
+	ld	hl, (_snakesegmentsy)
+	ld	de, (ix - 6)
+	add	hl, de
+	ld	hl, (hl)
+	call	__ishl
+	ld	bc, 7
+	push	bc
+	push	bc
+	push	hl
+	push	iy
+	call	_gfx_FillRectangle
+	pop	hl
+	pop	hl
+	pop	hl
+	pop	hl
+	ld	hl, (_snakesegmentsx)
+	ld	de, (ix - 6)
+	add	hl, de
+	ld	hl, (hl)
+	ld	a, (_x)
+	ld	de, 0
+	ld	e, a
+	or	a, a
+	sbc	hl, de
+	jr	nz, BB4_15
+	ld	iy, (_snakesegmentsy)
+	ld	hl, (ix - 3)
+	ld	bc, 3
+	call	__imulu
+	push	hl
+	pop	de
+	add	iy, de
+	ld	hl, (iy)
+	ld	a, (_y)
+	ld	de, 0
+	ld	e, a
+	or	a, a
+	sbc	hl, de
+	jr	nz, BB4_15
+	xor	a, a
+	ld	(_alive), a
+BB4_15:
+	ld	bc, (ix - 9)
+	inc.sis	bc
+	jp	BB4_11
+BB4_16:
+	ld	a, (_x)
+	ld	e, a
+	ld	a, (_y)
+	ld	l, a
+	ld	a, e
+	cp	a, 41
+	jr	nc, BB4_18
+	ld	a, l
+	cp	a, 31
+	jr	c, BB4_19
+BB4_18:
+	xor	a, a
+	ld	(_alive), a
+BB4_19:
+	ld	a, (_apple)
+	ld	h, a
+	ld	a, (_apple+1)
+	ld	c, a
+	ld	a, e
+	cp	a, h
+	jp	nz, BB4_25
+	ld	a, l
+	cp	a, c
+	jp	nz, BB4_25
+	ld	hl, _score
+	push	hl
+	pop	iy
+	ld	hl, (iy)
+	inc.sis	hl
+	ld	(iy), l
+	ld	(iy + 1), h
+BB4_22:
+	call	_rand
+	ld	bc, 40
+	call	__irems
+	ld	a, l
+	ld	(_apple), a
+	call	_rand
+	ld	bc, 30
+	call	__irems
+	ld	a, l
+	ld	(_apple+1), a
+	ld	a, (_apple)
+	or	a, a
+	jr	nz, BB4_24
+	ld	a, l
+	or	a, a
+	jr	z, BB4_22
+BB4_24:
+	ld	a, (_x)
+	ld	de, 0
+	ld	e, a
+	ld	iy, (_snakesegmentsx)
+	ld	hl, (_snakesegmentsx+3)
+	ld	bc, 3
+	call	__imulu
+	push	hl
+	pop	bc
+	add	iy, bc
+	ld	(iy), de
+	ld	hl, (_snakesegmentsx+3)
+	inc	hl
+	ld	(_snakesegmentsx+3), hl
+	ld	a, (_y)
+	ld	de, 0
+	ld	e, a
+	ld	iy, (_snakesegmentsy)
+	ld	hl, (_snakesegmentsy+3)
+	ld	bc, 3
+	call	__imulu
+	push	hl
+	pop	bc
+	add	iy, bc
+	ld	(iy), de
+	ld	hl, (_snakesegmentsy+3)
+	inc	hl
+	ld	(_snakesegmentsy+3), hl
+BB4_25:
+	ld	hl, -32
+	push	hl
+	call	_gfx_SetColor
+	pop	hl
+	ld	a, (_apple)
+	ld	iy, 0
+	lea	hl, iy
+	ld	l, a
+	ld	c, 3
+	call	__ishl
+	push	hl
+	pop	de
+	ld	a, (_apple+1)
+	lea	hl, iy
+	ld	l, a
+	call	__ishl
+	ld	bc, 7
+	push	bc
+	push	bc
+	push	hl
+	push	de
+	call	_gfx_FillRectangle
+	pop	hl
+	pop	hl
+	pop	hl
+	pop	hl
+	ld	hl, _snakesegmentsx
+	push	hl
+	call	__ZN13specialVectorIhE9pop_frontEv
+	pop	hl
+	ld	hl, _snakesegmentsy
+	push	hl
+	call	__ZN13specialVectorIhE9pop_frontEv
+	pop	hl
+	ld	a, (_x)
+	ld	de, 0
+	ld	e, a
+	ld	iy, (_snakesegmentsx)
+	ld	hl, (_snakesegmentsx+3)
+	ld	bc, 3
+	call	__imulu
+	push	hl
+	pop	bc
+	add	iy, bc
+	ld	(iy), de
+	ld	hl, (_snakesegmentsx+3)
+	inc	hl
+	ld	(_snakesegmentsx+3), hl
+	ld	a, (_y)
+	ld	de, 0
+	ld	e, a
+	ld	iy, (_snakesegmentsy)
+	ld	hl, (_snakesegmentsy+3)
+	ld	bc, 3
+	call	__imulu
+	push	hl
+	pop	bc
+	add	iy, bc
+	ld	(iy), de
+	ld	hl, (_snakesegmentsy+3)
+	inc	hl
+	ld	(_snakesegmentsy+3), hl
+	ld	hl, 2
+	push	hl
+	push	hl
+	call	_gfx_SetTextXY
+	pop	hl
+	pop	hl
+	ld	hl, _score
+	ld	de, (hl)
+	ld	a, d
+	ld	l, a
+	rlc	l
+	sbc	hl, hl
+	ld	h, a
+	ld	l, e
+	ld	de, 1
+	push	de
+	push	hl
+	call	_gfx_PrintInt
+	pop	hl
+	pop	hl
+	call	_gfx_SwapDraw
+	ld	a, (_alive)
+	bit	0, a
+	jr	nz, BB4_27
+	ld	hl, 2000
+	push	hl
+	call	_delay
+	pop	hl
+	call	__Z8initgamev
+BB4_27:
+	call	_os_GetCSC
+	ld	(_key), a
+	ld	hl, 99
+	push	hl
+	call	_delay
+	pop	hl
+	jp	BB4_1
+BB4_28:
+	call	_gfx_End
+	or	a, a
+	sbc	hl, hl
+	ld	sp, ix
+	pop	ix
+	ret
+	section	.text,"ax",@progbits
+	section	.rodata,"a",@progbits
+	private	JTI4_0
+JTI4_0:
+	dl	BB4_4
+	dl	BB4_7
+	dl	BB4_5
+	dl	BB4_6
+
+	section	.text,"ax",@progbits
+	weak	__ZN13specialVectorIhE9pop_frontEv
+__ZN13specialVectorIhE9pop_frontEv:
+	call	__frameset0
+	ld	iy, (ix + 6)
+	ld	de, 0
+	ld	bc, (iy + 3)
+	dec	bc
+	ld	(iy + 3), bc
+	ld	iy, (iy)
+BB5_1:
+	push	de
+	pop	hl
+	or	a, a
+	sbc	hl, bc
+	call	pe, __setflag
+	jp	p, BB5_3
+	inc	de
+	lea	hl, iy + 3
+	ld	bc, (iy + 3)
+	ld	(iy), bc
+	ld	iy, (ix + 6)
+	ld	bc, (iy + 3)
+	push	hl
+	pop	iy
+	jr	BB5_1
+BB5_3:
+	pop	ix
+	ret
+	section	.text,"ax",@progbits
+
+	section	.init_array,"aw",@init_array
+	dl	__GLOBAL__sub_I_main.cpp
+	section	.bss,"aw",@nobits
+	public	_snakesegmentsx
+_snakesegmentsx:
+	rb	9
+
+	section	.bss,"aw",@nobits
+	public	_snakesegmentsy
+_snakesegmentsy:
+	rb	9
+
+	section	.data,"aw",@progbits
+	public	_direction
+_direction:
+	db	"", 0
+
+	section	.data,"aw",@progbits
+	public	_x
+_x:
+	db	2
+
+	section	.data,"aw",@progbits
+	public	_y
+_y:
+	db	15
+
+	section	.bss,"aw",@nobits
+	public	_key
+_key:
+	rb	1
+
+	section	.data,"aw",@progbits
+	public	_apple
+_apple:
+	db	""
+
+	section	.bss,"aw",@nobits
+	public	_score
+_score:
+	rb	2
+
+	section	.data,"aw",@progbits
+	public	_alive
+_alive:
+	db	1
+
+	ident	"clang version 15.0.0 (https://github.com/jacobly0/llvm-project 5f8512f22751066573aa48ac848a6d2195838ac3)"
+	extern	__Unwind_SjLj_Register
+	extern	__frameset
+	extern	_malloc
+	extern	_srand
+	extern	_gfx_SetTextBGColor
+	extern	_gfx_SetTextFGColor
+	extern	_gfx_Begin
+	extern	_rand
+	extern	_gfx_SwapDraw
+	extern	__ishl
+	extern	_gfx_PrintInt
+	extern	_gfx_SetDraw
+	extern	__setflag
+	extern	_gfx_FillScreen
+	extern	__Unwind_SjLj_Unregister
+	extern	__irems
+	extern	_gfx_FillRectangle
+	extern	__imulu
+	extern	_gfx_SetColor
+	extern	_delay
+	extern	_gfx_End
+	extern	_os_GetCSC
+	extern	__frameset0
+	extern	_gfx_SetTextXY

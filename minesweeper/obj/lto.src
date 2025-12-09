@@ -1,0 +1,1456 @@
+	section	.text,"ax",@progbits
+	assume	adl = 1
+	section	.text,"ax",@progbits
+	public	__Z14decode_tile_idhhh
+__Z14decode_tile_idhhh:
+	call	__frameset0
+	pop	ix
+	ret
+	section	.text,"ax",@progbits
+
+	section	.text,"ax",@progbits
+	public	__Z13decode_tile_xh
+__Z13decode_tile_xh:
+	call	__frameset0
+	ld	c, 9
+	ld	a, (ix + 6)
+	call	__bremu
+	pop	ix
+	ret
+	section	.text,"ax",@progbits
+
+	section	.text,"ax",@progbits
+	public	__Z13decode_tile_yh
+__Z13decode_tile_yh:
+	call	__frameset0
+	ld	c, 9
+	ld	b, (ix + 6)
+	call	__bdivu
+	pop	ix
+	ret
+	section	.text,"ax",@progbits
+
+	section	.text,"ax",@progbits
+	public	__Z14encode_tile_idhh
+__Z14encode_tile_idhh:
+	call	__frameset0
+	ld	h, (ix + 9)
+	ld	l, 9
+	mlt	hl
+	ld	a, l
+	add	a, (ix + 6)
+	pop	ix
+	ret
+	section	.text,"ax",@progbits
+
+	section	.text,"ax",@progbits
+	public	__Z8make_mapv
+__Z8make_mapv:
+	ld	hl, -12
+	call	__frameset
+	ld	iy, _map
+	ld.sis	hl, 0
+	ld.sis	de, 10
+	ld	(ix - 3), hl
+BB4_1:
+	ld	(ix - 6), hl
+	or	a, a
+	sbc.sis	hl, de
+	jp	nc, BB4_9
+	ld	hl, (ix - 3)
+	ld.sis	de, 16385
+	or	a, a
+	sbc.sis	hl, de
+	jp	nc, BB4_9
+	call	_rand
+	ld	bc, 9
+	call	__irems
+	ld	(ix - 9), hl
+	call	_rand
+	ld	bc, 9
+	call	__irems
+	push	hl
+	pop	de
+	ld	hl, (ix - 9)
+	ld	bc, 255
+	call	__iand
+	push	hl
+	pop	iy
+	ex	de, hl
+	call	__iand
+	push	hl
+	pop	de
+	lea	hl, iy
+	ld	bc, 9
+	call	__imulu
+	push	hl
+	pop	bc
+	ld	hl, _map
+	add	hl, bc
+	ld	(ix - 12), de
+	add	hl, de
+	ld	(ix - 9), hl
+	ld	a, (hl)
+	cp	a, 10
+	jr	nz, BB4_5
+BB4_4:
+	ld	hl, (ix - 6)
+	dec.sis	hl
+	jr	BB4_8
+BB4_5:
+	ld	a, (_cursor_x)
+	ld	bc, 0
+	ld	c, a
+	lea	hl, iy
+	or	a, a
+	sbc	hl, bc
+	push	hl
+	pop	de
+	push	de
+	pop	iy
+	add	iy, iy
+	sbc	hl, hl
+	push	hl
+	pop	bc
+	ex	de, hl
+	add	hl, bc
+	call	__ixor
+	ld	bc, 2
+	or	a, a
+	sbc	hl, bc
+	jr	nc, BB4_7
+	ld	a, (_cursor_y)
+	or	a, a
+	sbc	hl, hl
+	ex	de, hl
+	ld	e, a
+	ld	hl, (ix - 12)
+	sbc	hl, de
+	push	hl
+	pop	de
+	push	de
+	pop	iy
+	add	iy, iy
+	sbc	hl, hl
+	push	hl
+	pop	bc
+	ex	de, hl
+	add	hl, bc
+	call	__ixor
+	ld	de, 2
+	or	a, a
+	sbc	hl, de
+	jr	c, BB4_4
+BB4_7:
+	ld	hl, (ix - 9)
+	ld	(hl), 10
+	ld	hl, (ix - 6)
+BB4_8:
+	inc.sis	hl
+	ld	de, (ix - 3)
+	inc.sis	de
+	ld	(ix - 3), de
+	ld	iy, _map
+	ld.sis	de, 10
+	jp	BB4_1
+BB4_9:
+	ld	de, 0
+BB4_10:
+	ld	bc, 9
+	push	de
+	pop	hl
+	or	a, a
+	sbc	hl, bc
+	jp	z, BB4_46
+	ld	(ix - 9), de
+	inc	de
+	ld	(ix - 6), de
+	ld	de, 0
+BB4_12:
+	push	de
+	pop	hl
+	push	de
+	pop	bc
+	ld	de, 9
+	or	a, a
+	sbc	hl, de
+	jp	z, BB4_45
+	ld	(ix - 3), iy
+	add	iy, bc
+	ld	a, (iy)
+	cp	a, 10
+	push	bc
+	pop	de
+	jp	z, BB4_44
+	push	de
+	pop	hl
+	add	hl, bc
+	or	a, a
+	sbc	hl, bc
+	ld	c, 0
+	ld	(ix - 12), de
+	jr	z, BB4_18
+	ld	a, (iy - 1)
+	cp	a, 10
+	ld	c, 1
+	jr	z, BB4_17
+	ld	c, 0
+BB4_17:
+	ex	de, hl
+	ld	de, 8
+	or	a, a
+	sbc	hl, de
+	ld	de, (ix - 12)
+	ld	b, 0
+	jr	nc, BB4_21
+BB4_18:
+	ld	a, (iy + 1)
+	cp	a, 10
+	ld	l, 1
+	jr	z, BB4_20
+	ld	l, 0
+BB4_20:
+	ld	a, c
+	add	a, l
+	ld	c, a
+	ld	b, 1
+BB4_21:
+	ld	hl, (ix - 9)
+	add	hl, bc
+	or	a, a
+	sbc	hl, bc
+	jr	z, BB4_33
+	ld	a, (iy - 9)
+	cp	a, 10
+	ld	l, 1
+	jr	z, BB4_24
+	ld	l, 0
+BB4_24:
+	ld	a, c
+	add	a, l
+	ld	c, a
+	bit	0, b
+	jr	z, BB4_28
+	ld	a, (iy - 8)
+	cp	a, 10
+	ld	l, 1
+	jr	z, BB4_27
+	ld	l, 0
+BB4_27:
+	ld	a, c
+	add	a, l
+	ld	c, a
+BB4_28:
+	ex	de, hl
+	add	hl, bc
+	or	a, a
+	sbc	hl, bc
+	jr	z, BB4_32
+	ld	a, (iy - 10)
+	cp	a, 10
+	ld	l, 1
+	jr	z, BB4_31
+	ld	l, 0
+BB4_31:
+	ld	a, c
+	add	a, l
+	ld	c, a
+BB4_32:
+	ld	hl, (ix - 9)
+	ld	de, 8
+	or	a, a
+	sbc	hl, de
+	ld	de, (ix - 12)
+	jr	z, BB4_43
+BB4_33:
+	ld	a, (iy + 9)
+	cp	a, 10
+	ld	l, 1
+	jr	z, BB4_35
+	ld	l, 0
+BB4_35:
+	ld	a, c
+	add	a, l
+	ld	c, a
+	bit	0, b
+	jr	z, BB4_39
+	ld	a, (iy + 10)
+	cp	a, 10
+	ld	l, 1
+	jr	z, BB4_38
+	ld	l, 0
+BB4_38:
+	ld	a, c
+	add	a, l
+	ld	c, a
+BB4_39:
+	push	de
+	pop	hl
+	add	hl, bc
+	or	a, a
+	sbc	hl, bc
+	jr	z, BB4_43
+	ld	a, (iy + 8)
+	cp	a, 10
+	ld	l, 1
+	jr	z, BB4_42
+	ld	l, 0
+BB4_42:
+	ld	a, c
+	add	a, l
+	ld	c, a
+BB4_43:
+	ld	iy, (ix - 3)
+	add	iy, de
+	ld	(iy), c
+BB4_44:
+	inc	de
+	ld	iy, (ix - 3)
+	jp	BB4_12
+BB4_45:
+	lea	iy, iy + 9
+	ld	de, (ix - 6)
+	jp	BB4_10
+BB4_46:
+	ld	sp, ix
+	pop	ix
+	ret
+	section	.text,"ax",@progbits
+
+	section	.text,"ax",@progbits
+	public	__Z8draw_mapv
+__Z8draw_mapv:
+	ld	hl, -3
+	call	__frameset
+	scf
+	sbc	hl, hl
+	push	hl
+	call	_gfx_SetColor
+	pop	hl
+	ld	de, 297
+	ld	iy, 47
+BB5_1:
+	lea	hl, iy
+	or	a, a
+	sbc	hl, de
+	jr	z, BB5_3
+	ld	hl, 225
+	push	hl
+	ld	hl, 2
+	push	hl
+	ld	hl, 7
+	push	hl
+	push	iy
+	ld	(ix - 3), iy
+	call	_gfx_FillRectangle
+	ld	iy, (ix - 3)
+	pop	hl
+	pop	hl
+	pop	hl
+	pop	hl
+	ld	de, 25
+	add	iy, de
+	ld	de, 297
+	jr	BB5_1
+BB5_3:
+	ld	de, 257
+	ld	iy, 7
+BB5_4:
+	lea	hl, iy
+	or	a, a
+	sbc	hl, de
+	jr	z, BB5_6
+	ld	hl, 2
+	push	hl
+	ld	hl, 227
+	push	hl
+	push	iy
+	ld	hl, 47
+	push	hl
+	ld	(ix - 3), iy
+	call	_gfx_FillRectangle
+	ld	iy, (ix - 3)
+	pop	hl
+	pop	hl
+	pop	hl
+	pop	hl
+	ld	de, 25
+	add	iy, de
+	ld	de, 257
+	jr	BB5_4
+BB5_6:
+	pop	hl
+	pop	ix
+	ret
+	section	.text,"ax",@progbits
+
+	section	.text,"ax",@progbits
+	public	__Z11draw_cursorv
+__Z11draw_cursorv:
+	ld	hl, 31
+	push	hl
+	call	_gfx_SetColor
+	pop	hl
+	ld	a, (_cursor_x)
+	ld	de, 0
+	ld	e, a
+	push	de
+	pop	hl
+	ld	bc, 25
+	call	__imulu
+	push	hl
+	pop	iy
+	ld	bc, 49
+	add	iy, bc
+	ld	a, (_cursor_y)
+	ld	e, a
+	ex	de, hl
+	ld	bc, 25
+	call	__imulu
+	ld	de, 30
+	add	hl, de
+	ld	de, 2
+	push	de
+	ld	de, 23
+	push	de
+	push	hl
+	push	iy
+	call	_gfx_FillRectangle
+	pop	hl
+	pop	hl
+	pop	hl
+	pop	hl
+	ret
+	section	.text,"ax",@progbits
+
+	section	.text,"ax",@progbits
+	public	__Z12clear_cursorv
+__Z12clear_cursorv:
+	ld	hl, -3
+	call	__frameset
+	or	a, a
+	sbc	hl, hl
+	push	hl
+	call	_gfx_SetColor
+	pop	hl
+	ld	a, (_cursor_x)
+	or	a, a
+	sbc	hl, hl
+	ld	l, a
+	push	hl
+	pop	iy
+	ld	bc, 25
+	call	__imulu
+	ld	de, 49
+	add	hl, de
+	ld	(ix - 3), hl
+	ld	a, (_cursor_y)
+	ld	iyl, a
+	lea	hl, iy
+	call	__imulu
+	ld	de, 30
+	add	hl, de
+	ld	de, 2
+	push	de
+	ld	de, 23
+	push	de
+	push	hl
+	ld	hl, (ix - 3)
+	push	hl
+	call	_gfx_FillRectangle
+	ld	sp, ix
+	pop	ix
+	ret
+	section	.text,"ax",@progbits
+
+	section	.text,"ax",@progbits
+	public	__Z14set_text_at_xyhh
+__Z14set_text_at_xyhh:
+	ld	hl, -3
+	call	__frameset
+	ld	a, (ix + 9)
+	ld	bc, 25
+	ld	iy, 0
+	push	af
+	ld	a, (ix + 6)
+	ld	iyl, a
+	pop	af
+	lea	hl, iy
+	call	__imulu
+	ld	de, 57
+	add	hl, de
+	ld	(ix - 3), hl
+	ld	iyl, a
+	lea	hl, iy
+	call	__imulu
+	ld	de, 17
+	add	hl, de
+	ld	de, (ix - 3)
+	ld	(ix + 6), de
+	ld	(ix + 9), hl
+	pop	hl
+	pop	ix
+	jp	_gfx_SetTextXY
+	section	.text,"ax",@progbits
+
+	section	.text,"ax",@progbits
+	public	__Z18set_text_at_cursorv
+__Z18set_text_at_cursorv:
+	ld	a, (_cursor_x)
+	ld	l, a
+	ld	a, (_cursor_y)
+	ld	e, a
+	push	de
+	push	hl
+	call	__Z14set_text_at_xyhh
+	pop	hl
+	pop	hl
+	ret
+	section	.text,"ax",@progbits
+
+	section	.text,"ax",@progbits
+	public	__Z9draw_flagv
+__Z9draw_flagv:
+	ld	hl, 74
+	push	hl
+	call	_gfx_SetTextFGColor
+	pop	hl
+	call	__Z18set_text_at_cursorv
+	ld	hl, 70
+	push	hl
+	call	_gfx_PrintChar
+	pop	hl
+	ret
+	section	.text,"ax",@progbits
+
+	section	.text,"ax",@progbits
+	public	__Z18draw_num_at_cursorv
+__Z18draw_num_at_cursorv:
+	ld	hl, 28
+	push	hl
+	call	_gfx_SetTextFGColor
+	pop	hl
+	call	__Z18set_text_at_cursorv
+	ld	hl, 89
+	push	hl
+	call	_gfx_PrintChar
+	pop	hl
+	ret
+	section	.text,"ax",@progbits
+
+	section	.text,"ax",@progbits
+	public	__Z14draw_num_at_xyhh
+__Z14draw_num_at_xyhh:
+	ld	hl, -5
+	call	__frameset
+	ld	a, (ix + 6)
+	ld	c, (ix + 9)
+	ld	iy, _map
+	ld	de, 0
+	push	de
+	pop	hl
+	ld	(ix - 4), a
+	ld	l, a
+	ld	(ix - 5), c
+	ld	e, c
+	ld	bc, 9
+	call	__imulu
+	push	hl
+	pop	bc
+	add	iy, bc
+	add	iy, de
+	ld	e, (iy)
+	ld	(ix - 3), de
+	ld	a, e
+	cp	a, 9
+	jr	nc, BB12_2
+	ld	hl, _switch.table._Z14draw_num_at_xyhh
+	ld	de, (ix - 3)
+	add	hl, de
+	ld	l, (hl)
+	push	hl
+	call	_gfx_SetTextFGColor
+	pop	hl
+BB12_2:
+	ld	l, (ix - 5)
+	push	hl
+	ld	l, (ix - 4)
+	push	hl
+	call	__Z14set_text_at_xyhh
+	pop	hl
+	pop	hl
+	ld	hl, (ix - 3)
+	ld	(ix + 6), hl
+	ld	(ix + 9), 1
+	ld	sp, ix
+	pop	ix
+	jp	_gfx_PrintInt
+	section	.text,"ax",@progbits
+
+	section	.text,"ax",@progbits
+	public	__Z20get_surrounding_numshhPh
+__Z20get_surrounding_numshhPh:
+	ld	hl, -17
+	call	__frameset
+	ld	d, (ix + 9)
+	xor	a, a
+	ld	(ix - 1), a
+	ld	iyl, 9
+	ld	(ix - 11), a
+	sbc	hl, hl
+	push	hl
+	pop	bc
+	ld	c, d
+	ex	de, hl
+	ld	e, (ix + 6)
+	ld	h, (ix + 9)
+	ld	a, h
+	or	a, a
+	ld	h, (ix + 9)
+	ld	(ix - 14), hl
+	ld	(ix - 7), de
+	push	bc
+	pop	hl
+	ld	(ix - 10), hl
+	jr	nz, BB13_2
+	ld	c, iyl
+	ld	b, iyh
+	ld	h, (ix + 9)
+	jr	BB13_5
+BB13_2:
+	ld	h, (ix + 9)
+	ex	de, hl
+	ld	iyh, d
+	ex	de, hl
+	dec	iyh
+	ld	(ix - 4), iy
+	ld	bc, 9
+	ex	de, hl
+	call	__imulu
+	ld	bc, (ix - 4)
+	push	hl
+	pop	de
+	ld	iy, _map
+	add	iy, de
+	ld	de, (ix - 10)
+	add	iy, de
+	ld	a, (iy - 1)
+	cp	a, 10
+	jr	nc, BB13_4
+	ld	a, 1
+	ld	(ix - 1), a
+	ld	l, c
+	ld	h, b
+	mlt	hl
+	ld	a, l
+	add	a, (ix + 6)
+	ld	hl, (ix + 12)
+	ld	(hl), a
+BB13_4:
+	ld	d, (ix + 9)
+	ld	l, e
+	ld	h, d
+	ld	a, h
+	cp	a, 8
+	ld	de, (ix - 7)
+	jp	nc, BB13_9
+BB13_5:
+	ld	(ix - 4), bc
+	ld	a, 1
+	ld	(ix - 11), a
+	inc	h
+	ld	(ix - 17), hl
+	ld	bc, 9
+	ex	de, hl
+	call	__imulu
+	push	hl
+	pop	bc
+	ld	iy, _map
+	add	iy, bc
+	ld	bc, (ix - 10)
+	add	iy, bc
+	ld	a, (iy + 1)
+	cp	a, 10
+	jr	nc, BB13_7
+	ld	bc, (ix - 4)
+	ld	hl, (ix - 17)
+	ld	l, c
+	mlt	hl
+	ld	a, l
+	add	a, (ix + 6)
+	ld	de, 0
+	push	af
+	ld	a, (ix - 1)
+	ld	iyl, a
+	pop	af
+	ld	e, iyl
+	ld	hl, (ix + 12)
+	add	hl, de
+	ld	(hl), a
+	inc	iyl
+	push	af
+	ld	a, iyl
+	ld	(ix - 1), a
+	pop	af
+	jr	BB13_8
+BB13_7:
+	ld	bc, (ix - 4)
+BB13_8:
+	ld	de, (ix - 7)
+BB13_9:
+	ld	a, (ix + 6)
+	or	a, a
+	ld	(ix - 4), bc
+	jp	z, BB13_23
+	push	de
+	pop	iy
+	dec	iy
+	ld	bc, 9
+	lea	hl, iy
+	call	__imulu
+	push	hl
+	pop	bc
+	ld	hl, _map
+	add	hl, bc
+	ld	de, (ix - 10)
+	add	hl, de
+	ld	a, (hl)
+	cp	a, 10
+	ld	(ix - 17), iy
+	ld	b, (ix + 9)
+	jr	nc, BB13_12
+	ld	hl, (ix - 4)
+	ld	c, l
+	ld	l, c
+	ld	h, b
+	mlt	hl
+	ld	a, l
+	add	a, iyl
+	ld	de, 0
+	push	af
+	ld	a, (ix - 1)
+	ld	iyl, a
+	pop	af
+	ld	e, iyl
+	ld	hl, (ix + 12)
+	add	hl, de
+	ld	(hl), a
+	inc	iyl
+	push	af
+	ld	a, iyl
+	ld	(ix - 1), a
+	pop	af
+BB13_12:
+	bit	0, (ix - 11)
+	ld	(ix - 14), bc
+	jr	z, BB13_16
+	ld	d, b
+	inc	d
+	ld	bc, 9
+	ld	hl, (ix - 17)
+	call	__imulu
+	push	hl
+	pop	bc
+	ld	iy, _map
+	add	iy, bc
+	ld	bc, (ix - 10)
+	add	iy, bc
+	ld	a, (iy + 1)
+	cp	a, 10
+	jr	nc, BB13_15
+	ld	hl, (ix - 4)
+	ld	e, l
+	mlt	de
+	ld	a, e
+	ld	hl, (ix - 17)
+	add	a, l
+	ld	de, 0
+	ld	c, (ix - 1)
+	ld	e, c
+	ld	hl, (ix + 12)
+	add	hl, de
+	ld	(hl), a
+	inc	c
+	ld	(ix - 1), c
+BB13_15:
+	ld	bc, (ix - 14)
+BB13_16:
+	ld	de, (ix - 7)
+	ld	a, b
+	or	a, a
+	jr	nz, BB13_18
+	ld	bc, (ix - 4)
+	jr	BB13_22
+BB13_18:
+	ld	d, b
+	dec	d
+	ld	bc, 9
+	ld	hl, (ix - 17)
+	call	__imulu
+	push	hl
+	pop	bc
+	ld	iy, _map
+	add	iy, bc
+	ld	bc, (ix - 10)
+	add	iy, bc
+	ld	a, (iy - 1)
+	cp	a, 10
+	jr	nc, BB13_20
+	ld	bc, (ix - 4)
+	ld	e, c
+	mlt	de
+	ld	a, e
+	ld	hl, (ix - 17)
+	add	a, l
+	ld	de, 0
+	push	af
+	ld	a, (ix - 1)
+	ld	iyl, a
+	pop	af
+	ld	e, iyl
+	ld	hl, (ix + 12)
+	add	hl, de
+	ld	(hl), a
+	inc	iyl
+	push	af
+	ld	a, iyl
+	ld	(ix - 1), a
+	pop	af
+	jr	BB13_21
+BB13_20:
+	ld	bc, (ix - 4)
+BB13_21:
+	ld	de, (ix - 7)
+BB13_22:
+	ld	a, (ix + 6)
+	cp	a, 8
+	jp	nc, BB13_33
+BB13_23:
+	inc	de
+	ld	bc, 9
+	push	de
+	pop	iy
+	lea	hl, iy
+	call	__imulu
+	push	hl
+	pop	de
+	ld	hl, _map
+	add	hl, de
+	ld	de, (ix - 10)
+	add	hl, de
+	ld	a, (hl)
+	cp	a, 10
+	ld	(ix - 7), iy
+	jr	nc, BB13_25
+	ld	bc, (ix - 14)
+	ld	h, b
+	ld	de, (ix - 4)
+	ld	l, e
+	mlt	hl
+	ld	a, l
+	add	a, iyl
+	ld	de, 0
+	push	af
+	ld	a, (ix - 1)
+	ld	iyl, a
+	pop	af
+	ld	e, iyl
+	ld	hl, (ix + 12)
+	add	hl, de
+	ld	(hl), a
+	inc	iyl
+	push	af
+	ld	a, iyl
+	ld	(ix - 1), a
+	pop	af
+	jr	BB13_26
+BB13_25:
+	ld	bc, (ix - 14)
+BB13_26:
+	bit	0, (ix - 11)
+	ld	iy, _map
+	jr	z, BB13_30
+	ld	d, b
+	inc	d
+	ld	bc, 9
+	ld	hl, (ix - 7)
+	call	__imulu
+	push	hl
+	pop	bc
+	add	iy, bc
+	ld	bc, (ix - 10)
+	add	iy, bc
+	ld	a, (iy + 1)
+	cp	a, 10
+	jr	nc, BB13_29
+	ld	hl, (ix - 4)
+	ld	e, l
+	mlt	de
+	ld	a, e
+	ld	hl, (ix - 7)
+	add	a, l
+	ld	de, 0
+	ld	c, (ix - 1)
+	ld	e, c
+	ld	hl, (ix + 12)
+	add	hl, de
+	ld	(hl), a
+	inc	c
+	ld	(ix - 1), c
+BB13_29:
+	ld	bc, (ix - 14)
+	ld	iy, _map
+BB13_30:
+	ld	a, b
+	or	a, a
+	jr	z, BB13_33
+	dec	b
+	ld	e, c
+	ld	d, b
+	ld	bc, 9
+	ld	hl, (ix - 7)
+	call	__imulu
+	push	hl
+	pop	bc
+	add	iy, bc
+	ld	bc, (ix - 10)
+	add	iy, bc
+	ld	a, (iy - 1)
+	cp	a, 10
+	jr	nc, BB13_33
+	ld	hl, (ix - 4)
+	ld	e, l
+	mlt	de
+	ld	a, e
+	ld	hl, (ix - 7)
+	add	a, l
+	or	a, a
+	sbc	hl, hl
+	ex	de, hl
+	ld	c, (ix - 1)
+	ld	e, c
+	ld	hl, (ix + 12)
+	add	hl, de
+	ld	(hl), a
+	inc	c
+	ld	(ix - 1), c
+BB13_33:
+	ld	a, (ix - 1)
+	ld	sp, ix
+	pop	ix
+	ret
+	section	.text,"ax",@progbits
+
+	section	.text,"ax",@progbits
+	public	__Z6dig_xyhh
+__Z6dig_xyhh:
+	ld	hl, -23
+	call	__frameset
+	ld	iy, _map
+	ld	de, 0
+	push	de
+	pop	hl
+	ld	l, (ix + 6)
+	ld	e, (ix + 9)
+	ld	bc, 9
+	call	__imulu
+	push	hl
+	pop	bc
+	add	iy, bc
+	add	iy, de
+	ld	a, (iy)
+	cp	a, 100
+	jp	nc, BB14_6
+	ld	l, (ix + 9)
+	push	hl
+	ld	l, (ix + 6)
+	push	hl
+	ld	(ix - 11), iy
+	call	__Z14draw_num_at_xyhh
+	ld	bc, (ix - 11)
+	pop	hl
+	pop	hl
+	ld	iy, _clicks
+	lea	hl, iy
+	ld	hl, (hl)
+	inc.sis	hl
+	ld	(iy), l
+	ld	(iy + 1), h
+	push	bc
+	pop	iy
+	ld	l, (iy)
+	ld	a, l
+	or	a, a
+	jp	nz, BB14_5
+	ld	l, -9
+	ld	(ix - 14), hl
+	lea	hl, ix - 8
+	ld	(ix - 17), hl
+	push	hl
+	ld	l, (ix + 9)
+	push	hl
+	ld	l, (ix + 6)
+	push	hl
+	call	__Z20get_surrounding_numshhPh
+	ld	iyl, a
+	pop	de
+	pop	de
+	pop	de
+	ld	hl, (ix - 11)
+	ld	a, (hl)
+	add	a, 100
+	ld	(hl), a
+	ld	bc, 0
+	ld	c, iyl
+	ld	de, 0
+BB14_3:
+	push	bc
+	pop	hl
+	or	a, a
+	sbc	hl, de
+	jr	z, BB14_6
+	ld	(ix - 20), bc
+	ld	hl, (ix - 17)
+	ld	(ix - 11), de
+	add	hl, de
+	ld	b, (hl)
+	ld	c, 9
+	call	__bdivu
+	ld	iy, (ix - 14)
+	ld	iyh, a
+	ex	de, hl
+	ld	e, iyl
+	ld	d, iyh
+	ex	de, hl
+	mlt	hl
+	ld	a, l
+	add	a, b
+	ld	c, a
+	ld	de, 0
+	push	de
+	pop	hl
+	ld	(ix - 23), bc
+	ld	l, c
+	ld	e, iyh
+	ld	bc, 9
+	call	__imulu
+	push	hl
+	pop	bc
+	ld	hl, _map
+	add	hl, bc
+	add	hl, de
+	ld	a, (hl)
+	cp	a, 10
+	ld	(ix - 14), iy
+	ex	de, hl
+	ld	e, iyh
+	ex	de, hl
+	push	hl
+	ld	hl, (ix - 23)
+	push	hl
+	call	c, __Z6dig_xyhh
+	pop	hl
+	pop	hl
+	ld	de, (ix - 11)
+	inc	de
+	ld	bc, (ix - 20)
+	jr	BB14_3
+BB14_5:
+	ld	a, l
+	add	a, 100
+	ld	(iy), a
+BB14_6:
+	ld	sp, ix
+	pop	ix
+	ret
+	section	.text,"ax",@progbits
+
+	section	.text,"ax",@progbits
+	public	__Z9clear_mapv
+__Z9clear_mapv:
+	ld	hl, -3
+	call	__frameset
+	ld	iy, _map
+	ld	bc, 0
+	ld	de, 9
+	push	bc
+	pop	hl
+BB15_1:
+	ld	(ix - 3), hl
+	or	a, a
+	sbc	hl, de
+	jr	z, BB15_5
+BB15_2:
+	push	bc
+	pop	hl
+	or	a, a
+	sbc	hl, de
+	jr	z, BB15_4
+	lea	hl, iy
+	add	iy, bc
+	ld	(iy), 0
+	push	hl
+	pop	iy
+	inc	bc
+	ld	de, 9
+	jr	BB15_2
+BB15_4:
+	ld	hl, (ix - 3)
+	inc	hl
+	lea	iy, iy + 9
+	ld	bc, 0
+	ld	de, 9
+	jr	BB15_1
+BB15_5:
+	pop	hl
+	pop	ix
+	ret
+	section	.text,"ax",@progbits
+
+	section	.text,"ax",@progbits
+	public	__Z10init_roundv
+__Z10init_roundv:
+	ld.sis	de, 0
+	ld	hl, _clicks
+	ld	(hl), e
+	inc	hl
+	ld	(hl), d
+	call	_os_GetCSC
+	xor	a, a
+	ld	(_key), a
+	ld	a, 4
+	ld	(_cursor_x), a
+	ld	(_cursor_y), a
+	sbc	hl, hl
+	push	hl
+	call	_gfx_FillScreen
+	pop	hl
+	or	a, a
+	sbc	hl, hl
+	push	hl
+	call	_gfx_SetTextBGColor
+	pop	hl
+	call	__Z9clear_mapv
+	call	__Z8make_mapv
+	call	__Z8draw_mapv
+	jp	__Z11draw_cursorv
+	section	.text,"ax",@progbits
+
+	section	.text,"ax",@progbits
+	public	__Z10lose_roundv
+__Z10lose_roundv:
+	ld	hl, 1
+	push	hl
+	push	hl
+	call	_gfx_SetTextXY
+	pop	hl
+	pop	hl
+	ld	hl, -32
+	push	hl
+	call	_gfx_SetTextFGColor
+	pop	hl
+	scf
+	sbc	hl, hl
+	push	hl
+	call	_gfx_SetTextBGColor
+	pop	hl
+	ld	hl, _.str
+	push	hl
+	call	_gfx_PrintString
+	pop	hl
+	ret
+	section	.text,"ax",@progbits
+
+	section	.text,"ax",@progbits
+	public	__Z9win_roundv
+__Z9win_roundv:
+	ld	hl, 1
+	push	hl
+	push	hl
+	call	_gfx_SetTextXY
+	pop	hl
+	pop	hl
+	ld	hl, 3
+	push	hl
+	call	_gfx_SetTextFGColor
+	pop	hl
+	scf
+	sbc	hl, hl
+	push	hl
+	call	_gfx_SetTextBGColor
+	pop	hl
+	ld	hl, _.str.1
+	push	hl
+	call	_gfx_PrintString
+	pop	hl
+	ret
+	section	.text,"ax",@progbits
+
+	section	.text,"ax",@progbits
+	public	__Z8do_roundv
+__Z8do_roundv:
+	ld	hl, -4
+	call	__frameset
+	call	_clock
+BB19_1:
+	call	_clock
+	ld	(ix - 3), hl
+	ld	(ix - 4), e
+	call	_os_GetCSC
+	ld	l, a
+	ld	(_key), a
+	ld	a, (_cursor_x)
+	ld	e, a
+	ld	a, l
+	cp	a, 2
+	jr	z, BB19_3
+	ld	bc, 9
+	jr	BB19_5
+BB19_3:
+	ld	a, e
+	or	a, a
+	ld	bc, 9
+	jr	z, BB19_5
+	call	__Z12clear_cursorv
+	ld	bc, 9
+	ld	hl, _cursor_x
+	dec	(hl)
+	ld	e, (hl)
+	ld	a, (_key)
+	ld	l, a
+BB19_5:
+	ld	a, l
+	cp	a, 3
+	jr	nz, BB19_8
+	ld	a, e
+	cp	a, 8
+	jr	nc, BB19_8
+	call	__Z12clear_cursorv
+	ld	bc, 9
+	ld	hl, _cursor_x
+	inc	(hl)
+	ld	a, (_key)
+	ld	l, a
+BB19_8:
+	ld	a, (_cursor_y)
+	ld	e, a
+	ld	a, l
+	cp	a, 4
+	jr	nz, BB19_11
+	ld	a, e
+	or	a, a
+	jr	z, BB19_11
+	call	__Z12clear_cursorv
+	ld	bc, 9
+	ld	hl, _cursor_y
+	dec	(hl)
+	ld	e, (hl)
+	ld	a, (_key)
+	ld	l, a
+BB19_11:
+	ld	a, l
+	cp	a, 1
+	jr	nz, BB19_14
+	ld	a, e
+	cp	a, 8
+	jr	nc, BB19_14
+	call	__Z12clear_cursorv
+	ld	bc, 9
+	ld	hl, _cursor_y
+	inc	(hl)
+	ld	a, (_key)
+	ld	l, a
+BB19_14:
+	ld	a, l
+	cp	a, 55
+	jr	nz, BB19_16
+	call	__Z9draw_flagv
+	ld	bc, 9
+	ld	a, (_key)
+	ld	l, a
+BB19_16:
+	ld	a, l
+	cp	a, 54
+	jr	nz, BB19_19
+	ld	a, (_cursor_x)
+	ld	iyl, a
+	ld	de, 0
+	push	de
+	pop	hl
+	ex	de, hl
+	ld	e, iyl
+	ex	de, hl
+	ld	a, (_cursor_y)
+	ld	e, a
+	call	__imulu
+	push	hl
+	pop	bc
+	ld	hl, _map
+	add	hl, bc
+	add	hl, de
+	ld	a, (hl)
+	cp	a, 10
+	jp	z, BB19_25
+	push	de
+	push	iy
+	call	__Z6dig_xyhh
+	pop	hl
+	pop	hl
+BB19_19:
+	call	_boot_CheckOnPressed
+	bit	0, a
+	jp	nz, BB19_24
+	call	__Z11draw_cursorv
+	ld	hl, (ix - 3)
+	ld	e, (ix - 4)
+	ld	bc, -1
+	xor	a, a
+	call	__land
+	ld	(ix - 3), hl
+	ld	(ix - 4), e
+BB19_21:
+	call	_clock
+	ld	bc, (ix - 3)
+	ld	a, (ix - 4)
+	call	__lsub
+	ld	bc, 5000
+	xor	a, a
+	call	__lcmpu
+	jr	c, BB19_21
+	ld	hl, _clicks
+	ld	hl, (hl)
+	ld.sis	de, 71
+	or	a, a
+	sbc.sis	hl, de
+	jp	c, BB19_1
+	ld	a, 1
+	jr	BB19_26
+BB19_24:
+	ld	a, 3
+	jr	BB19_26
+BB19_25:
+	xor	a, a
+BB19_26:
+	ld	sp, ix
+	pop	ix
+	ret
+	section	.text,"ax",@progbits
+
+	section	.text,"ax",@progbits
+	public	_main
+_main:
+	ld	hl, -4
+	call	__frameset
+	ld	hl, (-851900)
+	ld	a, (-851897)
+	push	hl
+	call	_srand
+	pop	hl
+	call	_gfx_Begin
+BB20_1:
+	call	__Z10init_roundv
+	call	__Z8do_roundv
+	cp	a, 1
+	jr	nz, BB20_3
+	call	__Z9win_roundv
+	jr	BB20_5
+BB20_3:
+	cp	a, 3
+	jr	z, BB20_7
+	call	__Z10lose_roundv
+BB20_5:
+	call	_clock
+	ld	bc, -1
+	xor	a, a
+	call	__land
+	ld	(ix - 3), hl
+	ld	(ix - 4), e
+BB20_6:
+	call	_clock
+	ld	bc, (ix - 3)
+	ld	a, (ix - 4)
+	call	__lsub
+	ld	bc, 50000
+	xor	a, a
+	call	__lcmpu
+	jr	c, BB20_6
+	jr	BB20_1
+BB20_7:
+	call	_gfx_End
+	or	a, a
+	sbc	hl, hl
+	ld	sp, ix
+	pop	ix
+	ret
+	section	.text,"ax",@progbits
+
+	section	.data,"aw",@progbits
+	public	_cursor_x
+_cursor_x:
+	db	4
+
+	section	.data,"aw",@progbits
+	public	_cursor_y
+_cursor_y:
+	db	4
+
+	section	.bss,"aw",@nobits
+	public	_key
+_key:
+	rb	1
+
+	section	.bss,"aw",@nobits
+	public	_clicks
+_clicks:
+	rb	2
+
+	section	.bss,"aw",@nobits
+	public	_map
+_map:
+	rb	81
+
+	section	.rodata,"a",@progbits
+	private	_.str
+_.str:
+	db	"You lose!", 0
+
+	section	.rodata,"a",@progbits
+	private	_.str.1
+_.str.1:
+	db	"You win!", 0
+
+	section	.rodata,"a",@progbits
+	private	_switch.table._Z14draw_num_at_xyhh
+_switch.table._Z14draw_num_at_xyhh:
+	db	"á`ÿJ"
+
+	ident	"clang version 15.0.0 (https://github.com/jacobly0/llvm-project 5f8512f22751066573aa48ac848a6d2195838ac3)"
+	extern	_boot_CheckOnPressed
+	extern	_clock
+	extern	_gfx_PrintChar
+	extern	__frameset
+	extern	_srand
+	extern	__bremu
+	extern	_gfx_SetTextBGColor
+	extern	__Unwind_SjLj_Register
+	extern	_gfx_SetTextFGColor
+	extern	_gfx_Begin
+	extern	_rand
+	extern	__lsub
+	extern	_gfx_PrintString
+	extern	_gfx_PrintInt
+	extern	_gfx_FillScreen
+	extern	__Unwind_SjLj_Unregister
+	extern	__iand
+	extern	__irems
+	extern	_gfx_FillRectangle
+	extern	__ixor
+	extern	__imulu
+	extern	_gfx_SetColor
+	extern	__land
+	extern	_gfx_End
+	extern	_os_GetCSC
+	extern	__lcmpu
+	extern	__frameset0
+	extern	__bdivu
+	extern	_gfx_SetTextXY

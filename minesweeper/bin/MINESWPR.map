@@ -1,0 +1,103 @@
+Section          Base   Top    High   Length
+---------------- ------ ------ ------ -------
+.icon            D1A882 D1A99B           119h
+.init.libs       D1A99B D1A9F3            58h
+.libs            D1A9F3 D1AA32            3Fh
+.init.clock      D1AA32 D1AA4D            1Bh
+.init.reruncheck D1AA4D D1AA4D             0h
+.init            D1AA4D D1AA77            2Ah
+.fini            D1AA77 D1AAAB            34h
+.text            D1AAAB D1B708           C5Dh
+.data            D1B708 D1B71A            12h
+.rodata          D1B71A D1B758            3Eh
+.init_array      000000 000000             0h
+.ctors           000000 000000             0h
+.dtors           000000 000000             0h
+.fini_array      000000 000000             0h
+.bss             D052C6 D0531A D13FD8     54h
+.header          D1A87F D1A882             3h
+
+Label                                Value
+----------------------------------   ------
+___low_bss                         = D052C6
+___len_bss                         = 000054
+___heaptop                         = D13FD8
+___heapbot                         = D0531A
+___libs                            = D1A9F3
+___init_array_count                = 000000
+___ctors_count                     = 000000
+___dtors_count                     = 000000
+___fini_array_count                = 000000
+__stack                            = D1A87E
+__bdivu                            = D1AAAB
+__bdvrmu                           = D1AAB5
+__frameset                         = D1AAC4
+__iand                             = D1AAD2
+__idvrms                           = D1AAEB
+__idvrmu                           = D1AB19
+__imulu                            = D1AB31
+__ineg                             = D1AB61
+__irems                            = D1AB6A
+__ixor                             = D1AB72
+__land                             = D1AB8B
+__lcmpu                            = D1ABA6
+__lsub                             = D1ABAE
+_atomic_load_increasing_32         = D1ABB8
+_os_DisableHomeTextBuffer          = D1ABDD
+_os_EnableHomeTextBuffer           = D1ABEF
+_random                            = D1AC01
+__setstate                         = D1AC5F
+__state                            = D1B708
+_boot_CheckOnPressed               = 00057C
+_os_GetCSC                         = 021D3C
+_clock                             = D1AC6F
+_rand                              = D1AC7A
+_srand                             = D1AC87
+.missingappvar                     = D1B71A
+.libloadname                       = D1B71F
+.libloadnamelen                    = 000007
+.webaddress                        = D1B727
+___init_clock                      = D1AA32
+__start                            = D1AA4D
+___exithl                          = D1AA77
+skip._exit                         = D1AA77
+skip.__Exit                        = D1AA77
+skip._abort                        = D1AA77
+_exit.sp                           = D1AA78
+_exit.flash_wait_states            = D1AA82
+__Z8make_mapv                      = D1AC8F
+__Z8draw_mapv                      = D1AE9C
+__Z11draw_cursorv                  = D1AF29
+__Z12clear_cursorv                 = D1AF78
+__Z14set_text_at_xyhh              = D1AFCE
+__Z18set_text_at_cursorv           = D1B016
+__Z9draw_flagv                     = D1B029
+__Z14draw_num_at_xyhh              = D1B042
+__Z20get_surrounding_numshhPh      = D1B0AB
+__Z6dig_xyhh                       = D1B375
+__Z9clear_mapv                     = D1B472
+__Z10init_roundv                   = D1B4C0
+__Z10lose_roundv                   = D1B4FF
+__Z9win_roundv                     = D1B529
+__Z8do_roundv                      = D1B553
+_main                              = D1B69A
+_cursor_x                          = D1B718
+_cursor_y                          = D1B719
+_key                               = D052C6
+_clicks                            = D052C7
+_map                               = D052C9
+_.str                              = D1B73C
+_.str.1                            = D1B746
+_switch.table._Z14draw_num_at_xyhh = D1B74F
+lib.LibLoad                        = D1A9F3
+_#gfx_Begin                        = D1AA06
+_#gfx_End                          = D1AA0A
+_#gfx_SetColor                     = D1AA0E
+_#gfx_FillScreen                   = D1AA12
+_#gfx_PrintChar                    = D1AA16
+_#gfx_PrintInt                     = D1AA1A
+_#gfx_PrintString                  = D1AA1E
+_#gfx_SetTextXY                    = D1AA22
+_#gfx_SetTextBGColor               = D1AA26
+_#gfx_SetTextFGColor               = D1AA2A
+_#gfx_FillRectangle                = D1AA2E
