@@ -1,3 +1,1 @@
-### Hello World Demo
-
-Displays the text `Hello, World!` on the calculator.
+Minesweeper for the TI-84 calculator
